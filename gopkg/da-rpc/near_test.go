@@ -90,7 +90,23 @@ func TestNetworkValidation(t *testing.T) {
 }
 
 func TestLiveSumbit(t *testing.T) {
-	t.Skip("TODO")
+	config, err := near.NewConfig("da.test.near", "da.test.near", "ed25519:128HkYoJUTZvozQqFh2QcEdkJToDwosAgRQRQ5MybLQtV66U7hQNuP7ocsQyTLLv9rG6JYGzDJqh5jREWrXvLKA8", 1)
+	if err != nil {
+		t.Error(err)
+	}
+	if config.Namespace.Id != 1 {
+		t.Error("Expected namespace id to be equal")
+	}
+	if config.Namespace.Version != 0 {
+		t.Error("Expected namespace version to be equal")
+	}
+
+	res, err := config.Submit("0xfF00000000000000000000000000000000000000", []byte{0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1, 0x1})
+	if err != nil {
+		t.Errorf("Submit error: %s", err.Error())
+	}
+
+	t.Log(res)
 }
 
 func TestLiveGet(t *testing.T) {
